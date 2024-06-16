@@ -14,6 +14,7 @@ import PrivateRoutes from '../PrivateRoutes/PrivateRoutes';
 import Reviews from '../../user/container/Reviews/Reviews';
 import Card from '../../user/container/Card/Card';
 import { ThemeContext } from '../../context/ThemeContext';
+import Categories from '../../user/container/Categories/Categories';
 
 
 
@@ -27,6 +28,7 @@ function UserRoutes(props) {
         <div className={themeContext.theme}>
            
                 <Header />
+              
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/Shop" element={<Shop />} />
@@ -42,6 +44,7 @@ function UserRoutes(props) {
                     <Route exact path='/Page' element={<Page />} />
                     <Route exact path='/Contact' element={<Contact />} />
                     <Route exact path='/Reviews' element={<Reviews />} />
+                    <Route exact path='/Categories' element={<Categories />} />
                     
                 </Routes>
                 <Footer />

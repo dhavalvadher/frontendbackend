@@ -24,6 +24,20 @@ export const ERROR_PRODUCTS = 'ERROR_PRODUCTS';
 
 //----------------------------------------//
 
+
+
+//-------------------ADDPRODUCTS---------------------//
+
+export const GET_ADDPRODUCTS = 'GET_PRODUCTS';
+export const ADD_ADDPRODUCTS = 'ADD_PRODUCTS';
+export const EDIT_ADDPRODUCTS = 'EDIT_PRODUCTS';
+export const DELETE_ADDPRODUCTS = 'DELETE_PRODUCTS';
+export const LOADING_ADDPRODUCTS = 'LOADING_PRODUCTS';
+export const ERROR_ADDPRODUCTS = 'ERROR_PRODUCTS';
+
+
+//----------------------------------------//
+
 export const GET_SHOP = "GET_SHOP"
 
 

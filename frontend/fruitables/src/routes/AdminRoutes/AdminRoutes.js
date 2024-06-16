@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Products from '../../admin/container/Products/Products';
+import AddProducts from '../../admin/container/AddProducts/AddProducts';
 import Layout from '../../admin/component/Layout/Layout';
 import Reviews from '../../admin/container/Reviews/Reviews';
 import Category from '../../admin/container/Category/Category';
@@ -32,6 +33,7 @@ function AdminRoutes(props) {
                     <Route exact path="/Facility" element={<Facility/>}/>
                     <Route exact path="/Coupon" element={<Coupon/>}/>
                     <Route exact path="/Contact" element={<Contact/>}/>
+                    <Route exact path="/AddProducts" element={<AddProducts/>}/>
                 </Routes>
             </Layout>
          

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
@@ -8,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
-import { object, string, number } from 'yup';
+import { object, string, number, mixed } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, addProducts, editProducts, deleteProducts } from '../../../redux/action/products.action';
 import IconButton from '@mui/material/IconButton';
@@ -17,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { getCategories } from '../../../redux/action/category.action';
 import { getSubData } from '../../../redux/slice/subcategory.slice';
-
+// import * as yup from 'yup';
 
 function Products() {
   const [open, setOpen] = useState(false);
@@ -54,6 +53,13 @@ function Products() {
   };
 
   const columns = [
+    {
+      field: 'product_image', headerName: 'Product Image', width: 150,
+      renderCell: (params) => {
+        const imageUrl = params.row.product_image ? params.row.product_image.url : '';
+        return imageUrl ? <img src={imageUrl} alt="Product" style={{ width: 50, height: 50 }} /> : '';
+      }
+    },    
     {
       field: 'category_id', headerName: 'Category', width: 150,
       renderCell: (params) => {
@@ -96,7 +102,15 @@ function Products() {
     price: number().required("Please enter price").positive("Price must be positive"),
     category_id: string().required("Please select a category"),
     subcategory_id: string().required("Please select a subcategory"),
-    stock: number().required("Please enter stock").min(0, "Stock cannot be negative")
+    stock: number().required("Please enter stock").min(0, "Stock cannot be negative"),
+    product_image: mixed()
+      .required("Please select an image")
+      .test("fileSize", "The file is too large", (value) => {
+        return value && value.size <= 2 * 1024 * 1024;
+      })
+      .test("fileType", "Unsupported File Format", (value) => {
+        return value && ["image/jpeg", "image/png", "image/gif"].includes(value.type);
+      })
   });
 
   const formik = useFormik({
@@ -107,25 +121,34 @@ function Products() {
       description: '',
       price: '',
       stock: '',
+      product_image: '',
     },
     validationSchema: productSchema,
     onSubmit: (values, { resetForm }) => {
+      const formData = new FormData();
+      for (const key in values) {
+        formData.append(key, values[key]);
+      }
       if (update) {
-        dispatch(editProducts(values));
+        dispatch(editProducts(formData));
       } else {
-        dispatch(addProducts(values));
+        dispatch(addProducts(formData));
       }
       resetForm();
       handleClose();
     },
   });
 
+  const handleFileChange = (event) => {
+    setFieldValue("product_image", event.currentTarget.files[0]);
+  }
+
   const { handleSubmit, handleChange, handleBlur, errors, values, touched, setFieldValue } = formik;
 
   const changeCategorySelect = (event) => {
     const selectedCategoryId = event.target.value;
     setFieldValue("category_id", selectedCategoryId);
-    setFieldValue("subcategory_id", ""); 
+    setFieldValue("subcategory_id", "");
   };
 
   const changeSubcategorySelect = (event) => {
@@ -175,7 +198,7 @@ function Products() {
                 onChange={changeSubcategorySelect}
                 onBlur={handleBlur}
                 input={<OutlinedInput label="Select subcategory" />}
-                disabled={!values.category_id} 
+                disabled={!values.category_id}
               >
                 {filteredSubcategories.map((v) => (
                   <MenuItem key={v._id} value={v._id}>
@@ -185,6 +208,14 @@ function Products() {
               </Select>
               {errors.subcategory_id && touched.subcategory_id && <span style={{ color: 'red' }}>{errors.subcategory_id}</span>}
             </FormControl>
+
+            <input
+              id='product_image'
+              name='product_image'
+              type='file'
+              onChange={handleFileChange}
+            />
+            {errors.product_image && touched.product_image && <span style={{ color: 'red' }}>{errors.product_image}</span>}
 
             <TextField
               margin="dense"
@@ -260,7 +291,7 @@ function Products() {
             },
           }}
           getRowId={(row) => row._id}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[5, 10, 100]}
           checkboxSelection
         />
       </div>

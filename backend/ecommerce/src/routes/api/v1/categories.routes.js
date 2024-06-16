@@ -1,5 +1,6 @@
 const express = require('express')
 const { categoriescontroller } = require('../../../controller')
+const upload = require('../../../middleware/upload')
 
 const route = express.Router()
 

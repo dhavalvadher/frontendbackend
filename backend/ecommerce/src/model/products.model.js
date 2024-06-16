@@ -31,12 +31,16 @@ const productsSchema = new mongoose.Schema(
             required: true
         },
         price: {
-            type: Number,
-            required: true
+            type: Number
         },
         stock: {
-            type: Number,
-            required: true
+            type: Number
+        },
+        product_image: {
+            type: {
+                public_id: String,
+                url: String
+            }
         },
         isActive: {
             type: Boolean,
@@ -48,7 +52,6 @@ const productsSchema = new mongoose.Schema(
         versionKey: false
     }
 )
-
 const Products = mongoose.model("Products", productsSchema);
 
 module.exports = Products;

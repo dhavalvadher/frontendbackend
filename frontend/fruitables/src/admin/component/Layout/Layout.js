@@ -107,6 +107,7 @@ export default function Layout({children}) {
   };
 
   const fruitlayout = [
+    {title:"addproduct",icon:<AppleIcon/>,to:"/admin/AddProducts"},
     {title:"product",icon:<AppleIcon/>,to:"/admin/Products"},
     {title:"reviews",icon:<RateReviewIcon/>,to:"/admin/Reviews"},
     {title:"Categories",icon:<CategoryIcon/>,to:"/admin/Category"},

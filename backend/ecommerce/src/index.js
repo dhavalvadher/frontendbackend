@@ -14,7 +14,7 @@ app.use('/api/v1', Routes);
 connectDB()
 
 
-app.listen(8000, () => {
-  console.log("Server started at port 8000.");
+app.listen(9000, () => {
+  console.log("Server started at port 9000.");
 });
 

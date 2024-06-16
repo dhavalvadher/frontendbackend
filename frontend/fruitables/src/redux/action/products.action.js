@@ -1,18 +1,11 @@
 import axios from 'axios';
-import { 
-    GET_PRODUCTS, 
-    ADD_PRODUCTS, 
-    DELETE_PRODUCTS, 
-    EDIT_PRODUCTS, 
-    LOADING_PRODUCTS, 
-    ERROR_PRODUCTS 
-} from '../ActionType';
+import { GET_PRODUCTS, ADD_PRODUCTS, DELETE_PRODUCTS, EDIT_PRODUCTS, LOADING_PRODUCTS, ERROR_PRODUCTS } from '../ActionType';
 
 
 export const getProducts = () => async (dispatch) => {
     dispatch({ type: LOADING_PRODUCTS });
     try {
-        const response = await axios.get("http://localhost:8000/api/v1/products/list-products");
+        const response = await axios.get("http://localhost:9000/api/v1/products/list-products");
         dispatch({ type: GET_PRODUCTS, payload: response.data.data });
     } catch (error) {
         dispatch({ type: ERROR_PRODUCTS, payload: error.message });
@@ -20,23 +13,28 @@ export const getProducts = () => async (dispatch) => {
     }
 };
 
-
 export const addProducts = (product) => async (dispatch) => {
+    console.log(product);
     dispatch({ type: LOADING_PRODUCTS });
     try {
-        const response = await axios.post("http://localhost:8000/api/v1/products/create-product", product);
+        const response = await axios.post("http://localhost:9000/api/v1/products/create-product", product, {
+            headers: { 'Content-Type': 'multipart/form-data'},
+        });
+
+        // console.log(response);
+
         dispatch({ type: ADD_PRODUCTS, payload: response.data.data });
+
     } catch (error) {
         dispatch({ type: ERROR_PRODUCTS, payload: error.message });
         console.error("Failed to add product:", error);
     }
 };
 
-
 export const editProducts = (product) => async (dispatch) => {
     dispatch({ type: LOADING_PRODUCTS });
     try {
-        const response = await axios.put(`http://localhost:8000/api/v1/products/update-product/${product._id}`, product);
+        const response = await axios.put(`http://localhost:9000/api/v1/products/update-product/${product._id}`, product);
         dispatch({ type: EDIT_PRODUCTS, payload: response.data.data });
     } catch (error) {
         dispatch({ type: ERROR_PRODUCTS, payload: error.message });
@@ -47,7 +45,7 @@ export const editProducts = (product) => async (dispatch) => {
 export const deleteProducts = (id) => async (dispatch) => {
     dispatch({ type: LOADING_PRODUCTS });
     try {
-        await axios.delete(`http://localhost:8000/api/v1/products/delete-product/${id}`);
+        await axios.delete(`http://localhost:9000/api/v1/products/delete-product/${id}`);
         dispatch({ type: DELETE_PRODUCTS, payload: id });
     } catch (error) {
         dispatch({ type: ERROR_PRODUCTS, payload: error.message });
