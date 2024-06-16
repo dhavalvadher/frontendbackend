@@ -47,7 +47,7 @@ function Products() {
   };
 
   const handleEdit = (data) => {
-    formik.setValues(data);
+    formik.setValues(data);~
     setOpen(true);
     setUpdate(true);
   };
