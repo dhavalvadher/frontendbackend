@@ -45,9 +45,15 @@ export const categoryReducer = (state = initialState, action) => {
         case EDIT_CATEGORY:
             return {
                 isLoading: false,
-                categories: state.categories.map((v) => v._id === action.payload.data._id ? action.payload.data : v),
+                categories: state.categories.map((v) => {
+                    if (v._id === action.payload._id) {
+                        return action.payload
+                    } else {
+                        return v
+                    }
+                }),
                 error: null
-            };
+            }
 
         default:
             return state;

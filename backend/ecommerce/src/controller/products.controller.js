@@ -30,9 +30,9 @@ const listProducts = async (req, res) => {
 const getProduct = async (req, res) => {
     try {
         console.log(req.params.product_id);
-        const product = await Products.findById(req.params.product_id);
+        const products = await Products.findById(req.params.product_id);
 
-        if (!product) {
+        if (!products) {
             return res.status(404).json({
                 success: false,
                 message: "Product not found"
@@ -42,7 +42,7 @@ const getProduct = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Product fetched successfully",
-            data: product
+            data: products
         });
 
     } catch (error) {
@@ -68,7 +68,7 @@ const addProducts = async (req, res) => {
         // const { subcategory_id, ...productData } = req.body;
 
 
-        const product = await Products.create({
+        const products = await Products.create({
             ...req.body,
             product_image: {
                 public_id: fileRes.public_id,
@@ -76,7 +76,7 @@ const addProducts = async (req, res) => {
             },
         });
 
-        if (!product) {
+        if (!products) {
             return res.status(400).json({
                 success: false,
                 message: "Product not created"
@@ -86,7 +86,7 @@ const addProducts = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Product created successfully",
-            data: product
+            data: products
         });
 
     } catch (error) {
@@ -98,37 +98,95 @@ const addProducts = async (req, res) => {
 }
 
 const updateProducts = async (req, res) => {
-    try {
 
-        const product = await Products.findByIdAndUpdate(req.params.product_id, req.body, { new: true }, { runValidators: true });
-        console.log(product);
+    // console.log("abcd", req.params.product_id, req.body, req.file);
 
+    
+
+    if (req.file) {
+        console.log("New Image");
+
+        const fileRes = await uploadFile(req.file.path, "Products")
+
+        const product = await Products.findByIdAndUpdate(req.params.product_id,
+            {
+                ...req.body,
+                product_image: {
+                    public_id: fileRes.public_id,
+                    url: fileRes.url
+                }
+            }
+        );
+
+        console.log(req.params);
         if (!product) {
-            return res.status(400).json({
+            res.status(400).json({
                 success: false,
-                message: "Product not updated"
-            });
+                message: "Product not Update"
+            })
+        }
+
+
+        res.status(200).json({
+            success: true,
+            message: "Product Update sucessfully",
+            data: product
+        })
+
+
+    } else {
+        console.log("Old image");
+
+        const product = await Products.findByIdAndUpdate(req.params.product_id, req.body, { new: true, runValidators: true });
+
+
+        console.log(req.params);
+        if (!product) {
+            res.status(400).json({
+                success: false,
+                message: "Product not Update"
+            })
         }
 
         res.status(200).json({
             success: true,
-            message: "Product updated successfully",
+            message: "Product Update sucessfully",
             data: product
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error: " + error.message
-        });
+        })
     }
+
+
+    // try {
+
+    //     const products = await Products.findByIdAndUpdate(req.params.product_id, req.body, { new: true }, { runValidators: true });
+    //     console.log(products);
+
+    //     if (!products) {
+    //         return res.status(400).json({
+    //             success: false,
+    //             message: "Product not updated"
+    //         });
+    //     }
+
+    //     res.status(200).json({
+    //         success: true,
+    //         message: "Product updated successfully",
+    //         data: products
+    //     });
+
+    // } catch (error) {
+    //     res.status(500).json({
+    //         success: false,
+    //         message: "Internal server error: " + error.message
+    //     });
+    // }
 }
 
 const deleteProducts = async (req, res) => {
     try {
-        const product = await Products.findByIdAndDelete(req.params.product_id);
+        const products = await Products.findByIdAndDelete(req.params.product_id);
 
-        if (!product) {
+        if (!products) {
             return res.status(404).json({
                 success: false,
                 message: "Product not found"
@@ -138,7 +196,7 @@ const deleteProducts = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Product deleted successfully",
-            data: product
+            data: products
         });
     } catch (error) {
         res.status(500).json({

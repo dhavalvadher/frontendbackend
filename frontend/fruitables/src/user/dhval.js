@@ -55,19 +55,6 @@ export const productsReducer = (state = initialState, action) => {
                 error: null
             };
 
-            // return {
-            //     isLoading: false,
-            //     ...state,
-            //     products: state.products.map((v) => {
-            //         if (v._id === action.payload._id) {
-            //             return action.payload
-            //         } else {
-            //             return v
-            //         }
-            //     }),
-            //     error: null
-            // }
-
         default:
             return state;
     }

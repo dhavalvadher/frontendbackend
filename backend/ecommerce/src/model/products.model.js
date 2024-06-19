@@ -5,7 +5,7 @@ const productsSchema = new mongoose.Schema(
     {
         subcategory_id: {
             type: mongoose.Types.ObjectId,
-            ref: 'Categories',
+            ref: 'Subcategories',
             require: true
         },
         category_id:{
@@ -13,11 +13,11 @@ const productsSchema = new mongoose.Schema(
             ref: 'Categories',
             require: true
         },
-        seller_id:{
-            type: mongoose.Types.ObjectId,
-            ref: 'Users',
-            require: true
-        },
+        // seller_id:{
+        //     type: mongoose.Types.ObjectId,
+        //     ref: 'Users',
+        //     require: true
+        // },
         name: {
             type: String,
             trim: true,
@@ -31,16 +31,19 @@ const productsSchema = new mongoose.Schema(
             required: true
         },
         price: {
-            type: Number
+            type: Number,
+            required: true
         },
         stock: {
-            type: Number
+            type: Number,
+            required: true
         },
         product_image: {
             type: {
                 public_id: String,
                 url: String
-            }
+            },
+            required: true
         },
         isActive: {
             type: Boolean,

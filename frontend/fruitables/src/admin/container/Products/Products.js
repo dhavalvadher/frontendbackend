@@ -47,19 +47,20 @@ function Products() {
   };
 
   const handleEdit = (data) => {
-    formik.setValues(data);~
+    formik.setValues(data);
     setOpen(true);
     setUpdate(true);
   };
 
   const columns = [
     {
-      field: 'product_image', headerName: 'Product Image', width: 150,
-      renderCell: (params) => {
-        const imageUrl = params.row.product_image ? params.row.product_image.url : '';
-        return imageUrl ? <img src={imageUrl} alt="Product" style={{ width: 50, height: 50 }} /> : '';
-      }
-    },    
+      field: "product_image",
+      headerName: "product image",
+      width: 150,
+      renderCell: ({ row }) => (
+        <img src={row.product_image.url} width="50" height="50" />
+      ),
+    },
     {
       field: 'category_id', headerName: 'Category', width: 150,
       renderCell: (params) => {
@@ -106,10 +107,17 @@ function Products() {
     product_image: mixed()
       .required("Please select an image")
       .test("fileSize", "The file is too large", (value) => {
-        return value && value.size <= 2 * 1024 * 1024;
+        if (value.size) {
+          return value && value.size <= 2 * 1024 * 1024;
+        }
+        return true
+
       })
       .test("fileType", "Unsupported File Format", (value) => {
-        return value && ["image/jpeg", "image/png", "image/gif"].includes(value.type);
+        if (value.type) {
+          return value && ["image/jpeg", "image/png", "image/gif"].includes(value.type);
+        }
+        return true
       })
   });
 
@@ -125,14 +133,10 @@ function Products() {
     },
     validationSchema: productSchema,
     onSubmit: (values, { resetForm }) => {
-      const formData = new FormData();
-      for (const key in values) {
-        formData.append(key, values[key]);
-      }
       if (update) {
-        dispatch(editProducts(formData));
+        dispatch(editProducts(values));
       } else {
-        dispatch(addProducts(formData));
+        dispatch(addProducts(values));
       }
       resetForm();
       handleClose();
@@ -215,6 +219,11 @@ function Products() {
               type='file'
               onChange={handleFileChange}
             />
+            {
+              values.product_image &&
+              <img src={values.product_image.url ? values.product_image.url : URL.createObjectURL(values.product_image)} width="50" height="50" />
+            }
+
             {errors.product_image && touched.product_image && <span style={{ color: 'red' }}>{errors.product_image}</span>}
 
             <TextField

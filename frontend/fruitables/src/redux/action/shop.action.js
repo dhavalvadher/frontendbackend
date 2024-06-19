@@ -14,7 +14,6 @@ export const getshop = () => async (dispatch) => {
 
                 dispatch({ type: GET_SHOP, payload: response.data })
 
-
             })
             .catch((error) => {
 

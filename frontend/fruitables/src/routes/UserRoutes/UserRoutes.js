@@ -44,7 +44,7 @@ function UserRoutes(props) {
                     <Route exact path='/Page' element={<Page />} />
                     <Route exact path='/Contact' element={<Contact />} />
                     <Route exact path='/Reviews' element={<Reviews />} />
-                    <Route exact path='/Categories' element={<Categories />} />
+                    
                     
                 </Routes>
                 <Footer />
