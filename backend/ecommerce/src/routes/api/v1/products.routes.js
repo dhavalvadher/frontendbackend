@@ -32,4 +32,26 @@ route.delete(
     productsController.deleteProducts
 );
 
+
+route.get(
+    "/productsByCategory",
+    productsController.productsByCategory
+);
+route.get(
+    "/productsBySubcategory",
+    productsController.productsBySubcategory
+);
+route.get(
+    "/topRatating",
+    productsController.topRatating
+);
+route.get(
+    "/newArrivals",
+    productsController.newArrivals
+);
+route.get(
+    "/countCategories",
+    productsController.countCategories
+);
+
 module.exports = route;

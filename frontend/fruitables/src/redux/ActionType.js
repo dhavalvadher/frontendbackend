@@ -25,7 +25,16 @@ export const ERROR_PRODUCTS = 'ERROR_PRODUCTS';
 //----------------------------------------//
 
 
+//---------------VARIANTS-----------------------//
 
+export const LOADING_VARIANTS = "LOADING_VARIANTS"
+export const ERROR_VARIANTS = "ERROR_VARIANTS"
+export const GET_VARIANTS = "GET_VARIANTS"
+export const ADD_VARIANTS = "ADD_VARIANTS"
+export const DELETE_VARIANTS = "DELETE_VARIANTS"
+export const EDIT_VARIANTS = "EDIT_VARIANTS"
+
+//----------------------------------------//
 //-------------------ADDPRODUCTS---------------------//
 
 export const GET_ADDPRODUCTS = 'GET_PRODUCTS';
@@ -82,3 +91,14 @@ export const ERROR_CATEGORY = 'ERROR_CATEGORY';
 // export const EDIT_SUBCATEGORY = 'EDIT_SUBCATEGORY';
 // export const DELETE_SUBCATEGORY = 'DELETE_SUBCATEGORY';
 // export const ERROR_SUBCATEGORY = 'ERROR_SUBCATEGORY';
+
+
+
+
+
+
+
+
+
+
+

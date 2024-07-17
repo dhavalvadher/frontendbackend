@@ -27,6 +27,7 @@ import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 import PercentIcon from '@mui/icons-material/Percent';
 import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
 
 const drawerWidth = 240;
 
@@ -108,10 +109,11 @@ export default function Layout({children}) {
 
   const fruitlayout = [
     {title:"addproduct",icon:<AppleIcon/>,to:"/admin/AddProducts"},
-    {title:"product",icon:<AppleIcon/>,to:"/admin/Products"},
     {title:"reviews",icon:<RateReviewIcon/>,to:"/admin/Reviews"},
     {title:"Categories",icon:<CategoryIcon/>,to:"/admin/Category"},
     {title:"SubCategories",icon:<CategoryOutlinedIcon/>,to:"/admin/Subcategory"},
+    {title:"product",icon:<AppleIcon/>,to:"/admin/Products"},
+    {title:"Variants",icon:<BrowseGalleryIcon/>,to:"/admin/Variants"},
     {title:"Counter",icon:<HourglassFullIcon/>,to:"/admin/Counter"},
     {title:"Facility",icon:<BreakfastDiningIcon/>,to:"/admin/Facility"},
     {title:"coupon",icon:<PercentIcon/>,to:"/admin/coupon"},

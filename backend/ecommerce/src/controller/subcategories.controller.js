@@ -136,7 +136,7 @@ const subcategoryBycategory = async (req, res) => {
         // const subcategories = await Subcategories.find(req.params.category_id);
         console.log(req.params.category_id);
 
-        const subcategoryBycategory = await Subcategories.find({category_id:req.params.category_id});
+        const subcategoryBycategory = await Subcategories.find({ category_id: req.params.category_id });
         console.log(subcategoryBycategory);
 
 
@@ -161,11 +161,224 @@ const subcategoryBycategory = async (req, res) => {
     }
 }
 
+const countProduct = async (req, res) => {
+    try {
+        const countproducts = await Subcategories.aggregate([
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "_id",
+                    foreignField: "subcategory_id",
+                    as: "Product"
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    countProduct: {
+                        $sum: { $size: "$Product" }
+                    }
+                }
+            }
+        ])
+        res.status(200).json({
+            success: true,
+            message: "products count successfully",
+            data: countproducts
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error: " + error.message
+        });
+    }
+}
+
+const inactivesubcategory = async (req, res) => {
+    try {
+        const countinactive = await Subcategories.aggregate([
+            {
+                $match: {
+                    "isActive": false
+                }
+            },
+            {
+                $count: 'NoOfInActiveSubcategory'
+            }
+    
+        ])
+        res.status(200).json({
+            success: true,
+            data: countinactive
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error: " + error.message
+        });
+    }
+}
+
+const parentOfSubcategory = async (req, res) => {
+
+    const subcategories = await Subcategories.aggregate([
+        {
+            $lookup: {
+                from: "categories",
+                localField: "category_id",
+                foreignField: "_id",
+                as: "category"
+            }
+        },
+        {
+            $project: {
+                "name": 1,
+                "category": 1
+            }
+        }
+    ])
+
+    res.status(200).json({
+        success: true,
+        message: "Subcategories get  succesfully",
+        data: subcategories
+    })
+
+    console.log(subcategories);
+
+}
+
+const countActive = async (req, res) => {
+
+    const subcategories = await Subcategories.aggregate([
+        {
+            $match: {
+                isActive: true
+            }
+        },
+        {
+            $count: "NoOfActiveSubcategories"
+        }
+    ])
+
+    res.status(200).json({
+        success: true,
+        message: "Subcategories get  succesfully",
+        data: subcategories
+    })
+
+    console.log(subcategories);
+
+}
+
+const mostProducts = async (req, res) => {
+
+    const subcategories = await Subcategories.aggregate([
+        {
+            $lookup: {
+                from: "products",
+                localField: "_id",
+                foreignField: "subcategory_id",
+                as: "product"
+            }
+        },
+        {
+            $match: {
+                "product": { $ne: [] }
+            }
+        },
+        {
+            $unwind: {
+                path: "$product"
+            }
+        },
+        {
+            $group: {
+                _id: "$_id",
+                "subcategory_name": { $first: "$name" },
+                "CountProduct": {
+                    $sum: 1
+                },
+              	"product_name" : {$push : "$product.name"}
+            }
+        },
+        {
+            $sort: {
+                "CountProduct": -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ])
+
+    res.status(200).json({
+        success: true,
+        message: "Subcategories get  succesfully",
+        data: subcategories
+    })
+
+    console.log(subcategories);
+
+}
+
+
+const countProducts = async (req, res) => {
+
+    const subcategories = await Subcategories.aggregate([
+        {
+            $lookup: {
+                from: "products",
+                localField: "_id",
+                foreignField: "subcategory_id",
+                as: "product"
+            }
+        },
+        {
+            $match: {
+                "product": { $ne: [] }
+            }
+        },
+        {
+            $unwind: {
+                path: "$product"
+            }
+        },
+        {
+            $group: {
+                _id: "$_id",
+                "subcategory_name": { $first: "$name" },
+                "CountProduct": {
+                    $sum: 1
+                },
+              	"product_name" : {$push : "$product.name"}
+            }
+        }
+    ])
+
+    res.status(200).json({
+        success: true,
+        message: "Subcategories get  succesfully",
+        data: subcategories
+    })
+
+    console.log(subcategories);
+
+} 
+
+
 module.exports = {
     listSubcategories,
     getSubcategory,
     addSubcategory,
     updateSubcategory,
     deleteSubcategory,
-    subcategoryBycategory
+    subcategoryBycategory,
+    
+    countProduct,
+    inactivesubcategory,
+    parentOfSubcategory,
+    mostProducts,
+    countActive,
+    countProducts
 };

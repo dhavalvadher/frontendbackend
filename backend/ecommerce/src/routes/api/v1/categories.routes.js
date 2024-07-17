@@ -9,7 +9,6 @@ route.get(
     categoriescontroller.listcategory
 )
 
-
 route.get(
     '/get_categories/:category_id',
     categoriescontroller.getcategories
@@ -30,5 +29,35 @@ route.delete(
     categoriescontroller.deletecategories
 )
 
+route.get(
+    '/count-active',
+    categoriescontroller.countactive
+)
 
-module.exports = route
+route.get(
+    '/inactive',
+    categoriescontroller.inactive
+)
+
+route.get(
+    '/mostProducts',
+    categoriescontroller.mostproducts 
+)
+
+route.get(
+    '/totalProducts',
+    categoriescontroller.totalProducts
+)
+
+route.get(
+    '/averageproducts',
+    categoriescontroller.averageproducts
+)
+
+route.get(
+    '/specific',
+    categoriescontroller.specific
+)
+
+
+module.exports = route 
