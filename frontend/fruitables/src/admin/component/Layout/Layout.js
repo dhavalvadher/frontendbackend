@@ -28,6 +28,7 @@ import PercentIcon from '@mui/icons-material/Percent';
 import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import BrowseGalleryIcon from '@mui/icons-material/BrowseGallery';
+import NaturePeopleIcon from '@mui/icons-material/NaturePeople';
 
 const drawerWidth = 240;
 
@@ -118,6 +119,7 @@ export default function Layout({children}) {
     {title:"Facility",icon:<BreakfastDiningIcon/>,to:"/admin/Facility"},
     {title:"coupon",icon:<PercentIcon/>,to:"/admin/coupon"},
     {title:"Contact",icon:<PermContactCalendarOutlinedIcon/>,to:"/admin/Contact"}, 
+    {title:"Salespeople",icon:<NaturePeopleIcon/>,to:"/admin/Salespeople"}, 
   ]
 
   return (

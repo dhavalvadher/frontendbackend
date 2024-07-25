@@ -33,3 +33,5 @@ const categoriesSchema = new mongoose.Schema(
 const Categories = mongoose.model("Categories", categoriesSchema);
 
 module.exports = Categories;
+
+

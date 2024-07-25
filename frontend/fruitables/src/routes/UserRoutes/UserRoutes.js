@@ -14,7 +14,9 @@ import PrivateRoutes from '../PrivateRoutes/PrivateRoutes';
 import Reviews from '../../user/container/Reviews/Reviews';
 import Card from '../../user/container/Card/Card';
 import { ThemeContext } from '../../context/ThemeContext';
-import Categories from '../../user/container/Categories/Categories';
+// import Categories from '../../user/container/Categories/Categories';
+import Login from '../../user/container/Login/Login';
+import Register from '../../user/container/Register/Register';
 
 
 
@@ -44,7 +46,8 @@ function UserRoutes(props) {
                     <Route exact path='/Page' element={<Page />} />
                     <Route exact path='/Contact' element={<Contact />} />
                     <Route exact path='/Reviews' element={<Reviews />} />
-                    
+                    <Route exact path="/Login" element={<Login />} />
+                    <Route exact path="/Register" element={<Register />} />
                     
                 </Routes>
                 <Footer />

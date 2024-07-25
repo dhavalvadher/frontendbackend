@@ -1,45 +1,89 @@
-const mongoose = require("mongoose")
+// const mongooes = require("mongoose");
 
-const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        lowercase: true,
-        trim: true,
-        unique: true,
-        required: true
+// const usersSchema = new mongooes.Schema(
+//     {
+//         name: {
+//             type: String,
+//             required: true,
+//             trim: true,
+//             lowercase: true
+//         },
+//         email: {
+//             type: String,
+//             unique: true,
+//             trim: true,
+//             required: true
+//         }, 
+//         password: {
+//             type: String,
+//             trim: true,
+//             required: true
+//         },
+//         role: {
+//             type: String,
+//             trim: true,
+//             required: true
+//         },
+//         refreshToken : {
+//             type: String,
+//             // required: true
+//         },
+//         isActive: {
+//             type: Boolean,
+//             default: true
+//         }
+//     },
+//     {
+//         timestamps: true,
+//         versionKey: false
+//     }
+// );
+
+// const Users = mongooes.model("Users", usersSchema);
+// module.exports = Users;
+
+
+const mongoose = require('mongoose');
+
+const usersSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+            lowercase: true
+        },
+        email: {
+            type: String,
+            required: true,
+            trim: true,
+            lowercase: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        refretoken :{
+            type: String
+        },
+        accrestoken :{
+            type: String
+        },
+        role: {
+            type: String,
+            required: true
+        },
+        isActive: {
+            type: Boolean,
+            default: true,
+            required: true
+        }
     },
-    address: {
-        type: String,
-        trim: true
-    },
-    email: {
-        type: String,
-        lowercase: true,
-        trim: true,
-        unique: true,
-        required: true
-    },
-    password: {
-        type: String,
-        trim: true,
-        required: true
-    },
-    phone: {
-        type: Number,
-        trim: true
-    },
-    isActive: {
-        type: Boolean,
-        default: true
-    }
-},
     {
         timestamps: true,
         versionKey: false
-    })
-
-const Users = mongoose.model("Users", productSchema);
+    }
+)
+const Users = mongoose.model('Users', usersSchema);
 
 module.exports = Users;
-
-

@@ -99,6 +99,20 @@ export const ERROR_CATEGORY = 'ERROR_CATEGORY';
 
 
 
+// //---------------SALESPEOPLE-----------------------//
+// export const GET_SALESPEOPLE = 'GET_SALESPEOPLE';
+// export const ADD_SALESPEOPLE = 'ADD_SALESPEOPLE';
+// export const EDIT_SALESPEOPLE = 'EDIT_SALESPEOPLE';
+// export const DELETE_SALESPEOPLE = 'DELETE_SALESPEOPLE';
+// export const LOADING_SALESPEOPLE = 'LOADING_SALESPEOPLE';
+// export const ERROR_SALESPEOPLE = 'ERROR_SALESPEOPLE';
+
+// //----------------------------------------//
 
 
 
+//---------------SALESPEOPLE-----------------------//
+export const GET_SALESPEOPLE = 'GET_SALESPEOPLE';
+export const ADD_SALESPEOPLE = 'ADD_SALESPEOPLE';
+export const EDIT_SALESPEOPLE = 'EDIT_SALESPEOPLE';
+export const DELETE_SALESPEOPLE = 'DELETE_SALESPEOPLE';

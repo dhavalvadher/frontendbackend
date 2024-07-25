@@ -11,15 +11,15 @@ const getsalespeople = async () => {
     }
 };
 
-const postsalespeople = async (city, sname, comm) => {
+const postsalespeople = async (city, sname, comm,isActive) => {
     try {
 
-        const [result] = await pool.execute("INSERT INTO salespeople (city, sname,comm) VALUES (?,?,?)",
-            [city, sname, comm]);
+        const [result] = await pool.execute("INSERT INTO salespeople (city, sname,comm,isActive) VALUES (?,?,?,?)",
+            [city, sname, comm,isActive]);
 
 
         // console.log(result);
-        return { city, sname, comm, snum: result.insertId }
+        return { city, sname, comm, isActive,snum: result.insertId }
 
 
 
@@ -34,7 +34,7 @@ const postsalespeople = async (city, sname, comm) => {
 
 const deleteSalespeople = async (snum) => {
     try {
-        const [result] = await pool.execute("DELETE FROM salespeople WHERE SNUM=?", [snum]);
+        const [result] = await pool.execute("DELETE FROM salespeople WHERE snum=?", [snum]);
         console.log(result);
         return result;
     } catch (error) {
@@ -42,13 +42,16 @@ const deleteSalespeople = async (snum) => {
     }
 };
 
-const updateSalespeople = async (snum, city, sname, comm) => {
+const updateSalespeople = async (snum, sname, city, comm, isActive) => {
     try {
-        const [result] = await pool.execute("UPDATE salespeople SET city=?, sname=?, comm=? WHERE SNUM=?", [city, sname, comm, snum]);
+        const [result] = await pool.execute('UPDATE salespeople SET sname=?, city= ?, comm=?, isActive = ?   WHERE snum = ?', [sname, city, comm, isActive, snum])
         console.log(result);
-        return result;
+
+        return result
+
     } catch (error) {
-        throw new Error("Error updating salespeople:" + error.message);
+        console.log(error);
+        throw new Error("error update salespeople");
     }
 };
 

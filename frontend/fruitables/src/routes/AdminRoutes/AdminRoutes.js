@@ -12,6 +12,7 @@ import Coupon from '../../admin/container/Coupon/Coupon';
 import Contact from '../../admin/container/Contact/Contact';
 import Subcategory from '../../admin/container/Subcategory/Subcategory';
 import Variants from '../../admin/container/Variants/Variants';
+import Salespeople from '../../admin/container/Salespeople/Salespeople';
 
 
 
@@ -34,6 +35,7 @@ function AdminRoutes(props) {
                     <Route exact path="/Facility" element={<Facility/>}/>
                     <Route exact path="/Coupon" element={<Coupon/>}/>
                     <Route exact path="/Contact" element={<Contact/>}/>
+                    <Route exact path="/Salespeople" element={<Salespeople/>}/>
                 </Routes>
             </Layout>
          
