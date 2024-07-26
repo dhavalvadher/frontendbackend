@@ -1,6 +1,8 @@
 const Categories = require("../model/categories.model");
 
 const listcategory = async (req, res) => {
+
+    console.log("cateee", req.user);
     try {
         const categories = await Categories.find();
 

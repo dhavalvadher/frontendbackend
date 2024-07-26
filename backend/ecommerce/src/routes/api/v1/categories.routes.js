@@ -1,11 +1,13 @@
 const express = require('express')
 const { categoriescontroller } = require('../../../controller')
 const upload = require('../../../middleware/upload')
+const auth = require('../../../middleware/auth')
 
 const route = express.Router()
 
 route.get(
     '/list_categories',
+    auth(["dhavall","employee"]),
     categoriescontroller.listcategory
 )
 

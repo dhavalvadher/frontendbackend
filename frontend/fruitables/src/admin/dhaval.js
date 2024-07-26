@@ -1,6 +1,6 @@
-const Users = require("../model/users.model");
+const Users = require("../modal/users.modal");
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 
 const userpost = async (req, res) => {
     try {
@@ -69,19 +69,17 @@ const userpost = async (req, res) => {
 }
 
 const generateAuthToken = async (id) => {
-    console.log("generateAuthToken", id);
+    console.log("generateAuthToken_id", id);
     try {
 
         const user = await Users.findById(id);
 
-
-        const accrestoken = jwt.sign({
+        const accrestoken =await jwt.sign({
             _id: user._id,
-            role: user.role,
+            role: user.role     
         }, "abc123",
-            { expiresIn: "1 hours" });
+            { expiresIn: 60 * 60 });
 
-        console.log("accrestoken", accrestoken);
 
         const refretoken = await jwt.sign({
             _id: id
@@ -89,7 +87,6 @@ const generateAuthToken = async (id) => {
             "123abc",
             { expiresIn: "2d" });
 
-        console.log("refretokenrefretoken", refretoken);
 
         user.refretoken = refretoken
 
@@ -128,8 +125,6 @@ const login = async (req, res) => {
         }
 
         const { accrestoken, refretoken } = await generateAuthToken(user._id);
-        console.log("accrestoken!!!!!!!!!!!1", accrestoken);
-        console.log("refretoken!!!!!!!!!!!!", refretoken);
 
         const newdataf = await Users.findById({ _id: user._id }).select("-password -refretoken");
 
@@ -180,9 +175,14 @@ const getnewtoken = async (req, res) => {
             })
         }
 
-        const { accrestoken, refretoken } = await generateAuthToken(user._id);
+        if (req.cookies.refretoken != user.refretoken) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Refresh Token"
+            })
+        }
 
-        console.log({ "accessToken, refreshtoken": accrestoken, refretoken });
+        const { accrestoken, refretoken } = await generateAuthToken(user._id);
 
 
         const option = {
@@ -196,7 +196,7 @@ const getnewtoken = async (req, res) => {
             .cookie("refretoken", refretoken, option)
             .json({
                 success: true,
-                message: "ganret new token",
+                message: "new token",
                 data: { accrestoken }
             })
 
@@ -205,37 +205,4 @@ const getnewtoken = async (req, res) => {
     }
 }
 
-const logout = async (req, res) => {
-    try {
-        console.log(req.body._id);
-        const user = await Users.findByIdAndUpdate(
-            req.body._id,
-            {
-                $unset:
-                    { refretoken: 1 }
-            },
-            {
-                new: true
-            }
-        );
-
-        if (!user) {
-            return res.status(400).json({
-                success: false,
-                message: "user not logged out"
-            })
-        }
-        res.status(200).json({
-            success: true,
-            message: "user logged out"
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "internal server error:" + error.message
-        })
-    }
-}
-
-module.exports = { userpost, login, getnewtoken, logout }
+module.exports = { userpost, login, getnewtoken }

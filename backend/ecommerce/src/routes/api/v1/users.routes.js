@@ -1,26 +1,3 @@
-// const express = require('express');
-// const { usersController } = require('../../../controller');
-
-
-// const routes = express.Router();
-
-// routes.post(
-//     '/register',
-//     usersController.ragister
-// )
-
-// routes.post(
-//     '/login',
-//     usersController.login
-// )
-
-// routes.post(
-//     '/newtokens',
-//     usersController.generateNewTokens
-// )
-
-
-// module.exports = routes;
 
 
 const express = require("express");
@@ -43,6 +20,12 @@ routes.post(
 routes.post(
     "/get-newtoken",
     usersController.getnewtoken
+
+)
+
+routes.post(
+    "/logout",
+    usersController.logout
 
 )
 
