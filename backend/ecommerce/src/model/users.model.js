@@ -61,17 +61,21 @@ const usersSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: true
+            trim: true
+
         },
-        refretoken :{
+        refreshToken :{
             type: String
         },
-        accrestoken :{
+        accessToken :{
             type: String
         },
         role: {
             type: String,
             required: true
+        },
+        googleId: {
+            type: String
         },
         isActive: {
             type: Boolean,
