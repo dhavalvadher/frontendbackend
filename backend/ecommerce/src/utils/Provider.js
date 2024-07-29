@@ -9,8 +9,8 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const googleProvider = async () => {
     try {
         await passport.use(new GoogleStrategy({
-            clientID: "",
-            clientSecret: "",
+            clientID: "809862158173-upakmu2p7gj0i4vpnc91imk65nf4e605.apps.googleusercontent.com",
+            clientSecret: "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",
             callbackURL: "http://localhost:9000/api/v1/users/google/callback"
         },
 
@@ -53,8 +53,8 @@ const googleProvider = async () => {
 
 const facebookProvider = () => {
     passport.use(new FacebookStrategy({
-        clientID: "",
-        clientSecret: "",
+        clientID: "838301617918888",
+        clientSecret: "a01a4c9ceae232a10870cea501861036",
         callbackURL: "http://localhost:9000/api/v1/users/facebook/callback",
         profileFields: ['id', 'displayName', 'emails']
     },
