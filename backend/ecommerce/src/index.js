@@ -4,7 +4,7 @@ const connectDB = require('./db/mongodb');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const { googleProvider } = require('./utils/Provider');
+const {facebookProvider, googleProvider } = require('./utils/Provider');
 
 const app = express()
 
@@ -16,11 +16,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 connectDB()
-googleProvider()
-// facebookProvider()
+googleProvider();
+facebookProvider();
 app.use('/api/v1', Routes);
 
 app.listen(9000, () => {
   console.log("Server started at port 9000.");
 });
+
 

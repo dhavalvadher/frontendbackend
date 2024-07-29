@@ -128,8 +128,8 @@ const login = async (req, res) => {
         }
 
         const { accessToken, refreshToken } = await generateAuthToken(user._id);
-        console.log("accessToken!!!!!!!!!!!1", accessToken);
-        console.log("refreshToken!!!!!!!!!!!!", refreshToken);
+        console.log("accessToken", accessToken);
+        console.log("refreshToken", refreshToken);
 
         const newdataf = await Users.findById({ _id: user._id }).select("-password -refreshToken");
 

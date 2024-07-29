@@ -77,6 +77,9 @@ const usersSchema = new mongoose.Schema(
         googleId: {
             type: String
         },
+        facebookId:{
+            type: String
+        },
         isActive: {
             type: Boolean,
             default: true,
